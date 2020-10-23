@@ -785,7 +785,7 @@ false Z
 false Zulu
 true posixrules
 </TimeZones>
-      <StartupTime>1601673047</StartupTime>
+      <StartupTime>1603218695</StartupTime>
     </root>
     <database id="2" parent="1" name="Users">
       <ObjectId>16411</ObjectId>
@@ -794,9 +794,10 @@ true posixrules
     <database id="3" parent="1" name="java_course_2">
       <ObjectId>16412</ObjectId>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>656</IntrospectionStateNumber>
+      <IntrospectionStateNumber>714</IntrospectionStateNumber>
       <Current>1</Current>
       <Relations>sequence|table|16484|16486|1
+sequence|table|24630|24632|1
 </Relations>
     </database>
     <database id="4" parent="1" name="postgres">
@@ -869,7 +870,7 @@ true posixrules
       <Comment>standard public schema</Comment>
       <StateNumber>276</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>657</IntrospectionStateNumber>
+      <IntrospectionStateNumber>715</IntrospectionStateNumber>
       <Current>1</Current>
     </schema>
     <access-method id="21" parent="3" name="heap">
@@ -945,12 +946,23 @@ true posixrules
       <StateNumber>631</StateNumber>
       <DataType>integer|0s</DataType>
     </sequence>
-    <table id="34" parent="20" name="registration">
+    <sequence id="34" parent="20" name="uuid_id_seq">
+      <ObjectId>24630</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>713</StateNumber>
+      <DataType>integer|0s</DataType>
+    </sequence>
+    <table id="35" parent="20" name="registration">
       <ObjectId>16486</ObjectId>
       <Owner>postgres</Owner>
-      <StateNumber>631</StateNumber>
+      <StateNumber>713</StateNumber>
     </table>
-    <column id="35" parent="34" name="id">
+    <table id="36" parent="20" name="uuid">
+      <ObjectId>24632</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>713</StateNumber>
+    </table>
+    <column id="37" parent="35" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -958,49 +970,87 @@ true posixrules
       <DefaultExpression>nextval(&apos;registration_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="36" parent="34" name="firstname">
+    <column id="38" parent="35" name="firstname">
       <Position>2</Position>
       <DataType>varchar(20)|0s</DataType>
       <StateNumber>631</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="37" parent="34" name="lastname">
+    <column id="39" parent="35" name="lastname">
       <Position>3</Position>
       <DataType>varchar(20)|0s</DataType>
       <StateNumber>631</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="38" parent="34" name="email">
+    <column id="40" parent="35" name="email">
       <Position>4</Position>
       <DataType>varchar(20)|0s</DataType>
       <StateNumber>631</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="39" parent="34" name="username">
+    <column id="41" parent="35" name="username">
       <Position>5</Position>
       <DataType>varchar(15)|0s</DataType>
       <StateNumber>631</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="40" parent="34" name="password">
+    <column id="42" parent="35" name="password">
       <Position>6</Position>
       <DataType>varchar(20)|0s</DataType>
       <StateNumber>631</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="41" parent="34" name="registration_pkey">
+    <index id="43" parent="35" name="registration_pkey">
       <ObjectId>16490</ObjectId>
       <StateNumber>631</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <key id="42" parent="34" name="registration_pkey">
+    <key id="44" parent="35" name="registration_pkey">
       <ObjectId>16491</ObjectId>
       <StateNumber>631</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>registration_pkey</UnderlyingIndexName>
     </key>
+    <column id="45" parent="36" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>713</StateNumber>
+      <DefaultExpression>nextval(&apos;uuid_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="46" parent="36" name="uuid">
+      <Position>2</Position>
+      <DataType>varchar(70)|0s</DataType>
+      <StateNumber>713</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <index id="47" parent="36" name="uuid_pkey">
+      <ObjectId>24636</ObjectId>
+      <StateNumber>713</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+    </index>
+    <key id="48" parent="36" name="uuid_pkey">
+      <ObjectId>24637</ObjectId>
+      <StateNumber>713</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>uuid_pkey</UnderlyingIndexName>
+    </key>
+    <foreign-key id="49" parent="36" name="uuid_id_fkey">
+      <ObjectId>24638</ObjectId>
+      <StateNumber>713</StateNumber>
+      <ColNames>id</ColNames>
+      <RefTableId>16486</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>registration</RefTableName>
+      <RefKeyName>registration_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
   </database-model>
 </dataSource>

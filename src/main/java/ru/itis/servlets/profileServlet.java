@@ -44,13 +44,15 @@ public class profileServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        usersRepository.save(new User(
-                request.getParameter("firstName"),
-                request.getParameter("lastName"),
-                request.getParameter("email"),
-                request.getParameter("username"),
-                request.getParameter("password")
-        ));
+        usersRepository.save(
+                User.builder()
+                        .firstName(request.getParameter("firstName"))
+                        .lastName(request.getParameter("lastName"))
+                        .username(request.getParameter("username"))
+                        .password(request.getParameter("password"))
+                        .email(request.getParameter("email"))
+                        .build(),
+                "registration");
         response.sendRedirect("html/login.html");
     }
-    }
+}

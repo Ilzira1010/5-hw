@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
@@ -34,12 +33,11 @@ public class UsersList extends HttpServlet {
 
         try {
             UsersRepositoryJdbcImpl repositoryJdbc = new UsersRepositoryJdbcImpl(
-                    DriverManager.getConnection(DB_URL,DB_USERNAME,DB_PASSWORD)
+                    DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)
             );
 
-            users = repositoryJdbc.findAll();
-        }
-        catch (SQLException e) {
+            users = repositoryJdbc.findAll("registration");
+        } catch (SQLException e) {
             throw new ServletException(e);
         }
     }

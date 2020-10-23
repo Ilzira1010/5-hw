@@ -1,6 +1,7 @@
 package ru.itis.servlets;
 
 import ru.itis.models.User;
+import ru.itis.repositories.CookieRepositoryImpl;
 import ru.itis.repositories.UsersRepository;
 import ru.itis.repositories.UsersRepositoryJdbcImpl;
 
@@ -13,6 +14,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Optional;
+import java.util.UUID;
 
 @WebServlet("/login")
 public class loginServlet extends HttpServlet {
@@ -44,12 +47,26 @@ public class loginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-        String email = request.getParameter("email");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        System.out.println(firstName + " " + lastName + " " + email + " " + username +" " + password );
+        String login = request.getParameter("email");
+        String pass = request.getParameter("password");
+
+        Optional<User> currentUser = usersRepository.findByLogin(login, "registration");
+
+        if (currentUser.isPresent()) {
+            if (
+                    currentUser.get().getEmail().equals(login) &&
+                            currentUser.get().getPassword().equals(pass)
+            ) {
+                CookieRepositoryImpl cookieRepository = new CookieRepositoryImpl(response);
+                cookieRepository.addCookie(UUID.randomUUID().toString(), currentUser.get().getId());
+                response.sendRedirect("/users");
+            } else {
+                response.sendRedirect("/login");
+            }
+        } else {
+            response.sendRedirect("/login");
+        }
+
 
     }
 }
